@@ -1,0 +1,102 @@
+[
+    {
+      "id": 0,
+      "imageUrl": "https://menu2go.ru/images/food/146/146_20210603150644_2805.jpeg",
+      "title": "Пепперони Фреш с перцем",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 803,
+      "category": 0,
+      "rating": 4
+    },
+    {
+      "id": 1,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZxQMc_Q_mJY4Jhw47fMhDZjV3bKxCMC7e6w&s",
+      "title": "Сырная",
+      "types": [0],
+      "sizes": [26, 40],
+      "price": 245,
+      "category": 3,
+      "rating": 6
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu4xQm9Ahh24OL0pANQ4xRcKl-9q5hrT3ojA&s",
+      "title": "Цыпленок барбекю",
+      "types": [0],
+      "sizes": [26, 40],
+      "price": 295,
+      "category": 1,
+      "rating": 4
+    },
+    {
+      "id": 3,
+      "imageUrl": "https://cdn.dodostatic.net/static/Img/Products/11ef1eb0ad88387aaf97bffa3763f55b_584x584.jpeg",
+      "title": "Кисло-сладкий цыпленок",
+      "types": [1],
+      "sizes": [26, 30, 40],
+      "price": 275,
+      "category": 2,
+      "rating": 2
+    },
+    {
+      "id": 4,
+      "imageUrl": "https://nalchik.tiktak-delivery.ru/img/dish/jumaPqet3ynt2wPe.jpg?mark=%2Fhome%2Ftiktak%2Fhtdocs%2Fpublic%2Fassets%2Findex%2Fimages%2Fwater-mark-2.png&s=1ec889989b04d256b5ab4afe306f4c9e",
+      "title": "Чизбургер-пицца",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 415,
+      "category": 3,
+      "rating": 8
+    },
+    {
+      "id": 5,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThKugU1vlQseHuBQWsIp-czoOUKo09i61p3g&s",
+      "title": "Крэйзи пепперони",
+      "types": [0],
+      "sizes": [30, 40],
+      "price": 580,
+      "category": 2,
+      "rating": 2
+    },
+    {
+      "id": 6,
+      "imageUrl": "https://cdn.dodostatic.net/static/Img/Products/11ef1eb0ad88387aaf97bffa3763f55b_584x584.jpeg",
+      "title": "Пепперони",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 675,
+      "category": 1,
+      "rating": 9
+    },
+    {
+      "id": 7,
+      "imageUrl": "https://menu2go.ru/images/food/146/146_20210603150644_2805.jpeg",
+      "title": "Маргарита",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 450,
+      "category": 4,
+      "rating": 10
+    },
+    {
+      "id": 8,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSYdUQPWk44mzxWZJOJSYVXC6-knuTpudwgw&s",
+      "title": "Четыре сезона",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 395,
+      "category": 5,
+      "rating": 10
+    },
+    {
+      "id": 9,
+      "imageUrl": "https://cdn.dodostatic.net/static/Img/Products/774244815038438fa52dcd6dcfcdaf35_1875x1875.jpeg",
+      "title": "Овощи и грибы 🌱",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 285,
+      "category": 5,
+      "rating": 7
+    }
+  ]
