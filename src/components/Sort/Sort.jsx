@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSortType } from '../../redux/slices/filterSlice';
 
-  export const listMenu = [
+export const listMenu = [
   { name: 'популярности (DESC)', sortProperty: 'rating' },
   { name: 'популярности (ASC)', sortProperty: '+rating' },
   { name: 'цене (DESC)', sortProperty: 'price' },
@@ -14,7 +14,8 @@ import { setSortType } from '../../redux/slices/filterSlice';
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector(state => state.filter.sort)
+  const sort = useSelector(state => state.filter.sort);
+  const sortRef = React.useRef();
 
   const [open, setOpen] = React.useState(false);
 
@@ -23,8 +24,32 @@ const Sort = () => {
     setOpen(false);
   }
 
+  React.useEffect(() => {
+    // console.log('Sort mount');
+    const handClickOutside = event => {
+
+      // event.path.includes(sortRef.current  в новых версиях не досупен. Вместо нее пишем composedPath()
+      /* if (event.path.includes(sortRef.current)) {
+        console.log('был клик на  sort');
+      */
+      //если клик был запредела попап, то мы скрываем попап
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+        // console.log('click outside');
+      }
+    }
+
+    document.body.addEventListener('click', handClickOutside);
+
+    //это код убирает лишних или ложныз обработчиков, когда например переходим на другую страницу.
+    return () => {
+      // console.log('Sort unmount');
+      document.body.removeEventListener('', handClickOutside);
+    }
+  }, [])
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
