@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Pizzablock = ({ title, price, imageUrl, sizes, types, id }) => {
   const [activeType, setActiveType] = React.useState(0);
@@ -20,7 +21,7 @@ const Pizzablock = ({ title, price, imageUrl, sizes, types, id }) => {
           {
             types.map((type) => (
               <li
-              key={type}
+                key={type}
                 className={activeType === type ? "active" : ''}
                 onClick={() => setActiveType(type)}
               >{typeNames[type]}</li>
@@ -32,7 +33,7 @@ const Pizzablock = ({ title, price, imageUrl, sizes, types, id }) => {
           {
             sizes.map((size, index) => (
               <li
-              key={index}
+                key={index}
                 className={activeSize === index ? "active" : ''}
                 onClick={() => setActiveSize(index)}
               >{size} см.</li>
