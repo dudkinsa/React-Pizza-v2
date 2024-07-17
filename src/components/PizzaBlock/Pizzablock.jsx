@@ -21,7 +21,7 @@ const addedCount = cartItem ? cartItem.count : 0;
       price, 
       imageUrl,
       type:typeNames[activeType],
-      size: activeSize,
+      size:sizes[activeSize],
     };
     dispatch(addItem(item));
   }
