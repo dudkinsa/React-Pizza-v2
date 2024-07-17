@@ -12,7 +12,7 @@ const initialState = {
 const filterSlice = createSlice({
     name: 'filters',
     initialState,
-    // reducers Это action, кор=торые будут отвечать за сохранение соротровки, 
+    // reducers Это action, которые будут отвечать за сохранение соротровки, 
     // фильртции и др действий
     reducers: {
         // Теперь мы должны сделать метод, который будет отвечать тип 
