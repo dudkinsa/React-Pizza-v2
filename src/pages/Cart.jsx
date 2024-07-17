@@ -30,7 +30,9 @@ const Cart = () => {
         </div>
         <div class="content__items">
 
-          <CartItem />
+          {
+            items.map(item => <CartItem key={item.id} {...item} />)
+          }
 
         </div>
         <div class="cart__bottom">
