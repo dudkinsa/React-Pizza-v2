@@ -1,21 +1,24 @@
 import React from 'react';
-// import qs from 'qs';
-// import { useNavigate } from 'react-router-dom';
-
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import qs from 'qs'; //
 //useSelector - исползуется как useContent
-import { setCategoryId, setCurrentPage} from '../redux/slices/filterSlice';
+import { useSelector, useDispatch } from 'react-redux';//
+import { useNavigate } from 'react-router-dom';//
+
+import Categories from '../components/Categories/Categories';//
+import Sort from '../components/Sort/Sort';//
+import Pizzablock from '../components/PizzaBlock/Pizzablock';//
+import Skeleton from '../components/PizzaBlock/Skeleton';//
+import Pagination from '../components/Pagination/Pagination';//
+
+
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+import axios from 'axios';//
+import { SearchContext } from '../App';//
+
 // import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice'; //15 урок не работает (пропустил)
 
 
-import Categories from '../components/Categories/Categories';
-import Pizzablock from '../components/PizzaBlock/Pizzablock';
-import Sort from '../components/Sort/Sort';
 // import dataBasePizzas from '../assets/pizza.json';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import Pagination from '../components/Pagination/Pagination';
-import { SearchContext } from '../App';
 
 
 
@@ -46,26 +49,29 @@ const Home = () => {
     }
 
 
+
+
+
+
+    /* 15 урок не работает (пропустил)
     
-/* 15 урок не работает (пропустил)
-
-    React.useEffect(() => {
-        if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
-            console.log(...params);
-            const sort = listMenu.find(obj => obj.sortProperty === params.sortProperty);
-            console.log(listMenu);
-
-            dispatch(
-                setFilters({
-                    ...params,
-                    sort,
-                })
-            )
-        }
-    }, []);
-
-*/
+        React.useEffect(() => {
+            if (window.location.search) {
+                const params = qs.parse(window.location.search.substring(1));
+                console.log(...params);
+                const sort = listMenu.find(obj => obj.sortProperty === params.sortProperty);
+                console.log(listMenu);
+    
+                dispatch(
+                    setFilters({
+                        ...params,
+                        sort,
+                    })
+                )
+            }
+        }, []);
+    
+    */
 
 
 
@@ -118,17 +124,32 @@ const Home = () => {
         window.scrollTo(0, 0);
     }, [categoryId, sortType, searchValue, currentPage]);
 
-/* 15 урок не работает (пропустил)
     React.useEffect(() => {
-        const QueryString = qs.stringify({
+        const queryString = qs.stringify({
             sortProperty: sortType,
-            // sortType,
             categoryId,
             currentPage,
         });
-        navigate(`?${QueryString}`);
-    }, [categoryId, sortType, currentPage]);
-*/
+
+        // console.log(queryString);
+    }, [categoryId, sortType, searchValue, currentPage]);
+
+
+
+
+
+
+    /* 15 урок не работает (пропустил)
+        React.useEffect(() => {
+            const QueryString = qs.stringify({
+                sortProperty: sortType,
+                // sortType,
+                categoryId,
+                currentPage,
+            });
+            navigate(`?${QueryString}`);
+        }, [categoryId, sortType, currentPage]);
+    */
 
     const pizzas = dataBasePizzas
         .map((pizza) => <Pizzablock
