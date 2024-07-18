@@ -10,21 +10,17 @@ import Pizzablock from '../components/PizzaBlock/Pizzablock';//
 import Skeleton from '../components/PizzaBlock/Skeleton';//
 import Pagination from '../components/Pagination/Pagination';//
 
-
 import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
 import axios from 'axios';//
 import { SearchContext } from '../App';//
 
-// import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice'; //15 урок не работает (пропустил)
-
-
 // import dataBasePizzas from '../assets/pizza.json';
-
-
 
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isSearch = React.useRef(false);
+    const isMounted = React.useRef(false);
 
     const categoryId = useSelector((state) => state.filter.categoryId);  // С помощью хука useSelector вытаскиваем все наше хранилище из store.js
     const sortType = useSelector((state) => state.filter.sort.sortProperty);
@@ -39,7 +35,6 @@ const Home = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     // const [currentPage, setCurrentPage] = React.useState(1);
 
-
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id));
     }
@@ -48,69 +43,7 @@ const Home = () => {
         dispatch(setCurrentPage(number))
     }
 
-    React.useEffect(() => {
-        if(window.location.search){
-            const params = qs.parse(window.location.search.substring(1));
-            // console.log(params);
-            
-            const sort = listMenu.find(obj => obj.sortProperty == params.sortProperty);
-
-            dispatch(
-                setFilter({
-                    ...params,
-                    sort,
-                })
-            )
-        }
-    }, [])
-
-
-
-
-    /* 15 урок не работает (пропустил)
-    
-        React.useEffect(() => {
-            if (window.location.search) {
-                const params = qs.parse(window.location.search.substring(1));
-                console.log(...params);
-                const sort = listMenu.find(obj => obj.sortProperty === params.sortProperty);
-                console.log(listMenu);
-    
-                dispatch(
-                    setFilters({
-                        ...params,
-                        sort,
-                    })
-                )
-            }
-        }, []);
-    
-    */
-
-
-
-    // Способ просмтора данные из сервера  базы данных  с помощью Fetch.  Fetch это типа console log
-    // fetch('https://66865ecb83c983911b01f11a.mockapi.io/items').then(res => {
-    //   return res.json();
-    // }).then(json => {
-    //   console.log(json);
-    // });
-
-
-    // Этот код рабочий, но у него есть проблема. Этот код бесконечно запрасывает дпнные из базы из сервера. 
-    // Чтобы сделать единсственный запрос для этого  изспользуется  хук  useEffect
-
-    // fetch('https://66865ecb83c983911b01f11a.mockapi.io/items')
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     setDataBasePizzas(json);
-    //   });
-    // });
-
-
-
-
-    React.useEffect(() => {
+    const fetchPizzas = () => {
         setIsLoading(true);
 
         const sortBy = sortType.replace('+', '');
@@ -137,36 +70,75 @@ const Home = () => {
                 setIsLoading(false);
             })
 
-        window.scrollTo(0, 0);
-    }, [categoryId, sortType, searchValue, currentPage]);
 
+    }
+
+    // Если изменили параметры и был первый рендер
     React.useEffect(() => {
-        const queryString = qs.stringify({
-            sortProperty: sortType,
-            categoryId,
-            currentPage,
-        });
-        // console.log(queryString);
-
-        navigate(`?${queryString}`)
-    }, [categoryId, sortType, searchValue, currentPage]);
-
-
-
-
-
-
-    /* 15 урок не работает (пропустил)
-        React.useEffect(() => {
-            const QueryString = qs.stringify({
+        if (isMounted.current) {
+            const queryString = qs.stringify({
                 sortProperty: sortType,
-                // sortType,
                 categoryId,
                 currentPage,
             });
-            navigate(`?${QueryString}`);
-        }, [categoryId, sortType, currentPage]);
-    */
+            // console.log(queryString);
+
+            navigate(`?${queryString}`)
+        }
+        isMounted.current = true;
+    }, [categoryId, sortType, searchValue, currentPage]);
+
+
+    // Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
+    React.useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            // console.log(params);
+
+            const sort = listMenu.find(obj => obj.sortProperty == params.sortProperty);
+
+            dispatch(
+                setFilter({
+                    ...params,
+                    sort,
+                })
+            );
+            isSearch.current = true;
+        }
+    }, [])
+
+
+    // Способ просмтора данные из сервера  базы данных  с помощью Fetch.  Fetch это типа console log
+    // fetch('https://66865ecb83c983911b01f11a.mockapi.io/items').then(res => {
+    //   return res.json();
+    // }).then(json => {
+    //   console.log(json);
+    // });
+
+
+    // Этот код рабочий, но у него есть проблема. Этот код бесконечно запрасывает дпнные из базы из сервера. 
+    // Чтобы сделать единсственный запрос для этого  изспользуется  хук  useEffect
+
+    // fetch('https://66865ecb83c983911b01f11a.mockapi.io/items')
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     setDataBasePizzas(json);
+    //   });
+    // });
+
+
+
+    // Если был первый рендер, то запрашиваем пиццы
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+
+        if (!isSearch.current) {
+            fetchPizzas();
+        }
+
+        isSearch.current = false;
+    }, [categoryId, sortType, searchValue, currentPage]);
+
 
     const pizzas = dataBasePizzas
         .map((pizza) => <Pizzablock

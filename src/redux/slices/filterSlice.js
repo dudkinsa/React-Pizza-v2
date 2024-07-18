@@ -35,23 +35,9 @@ const filterSlice = createSlice({
             state.sort = action.payload.sort;
             state.categoryId = Number(action.payload.categoryId);
         }
-
-
-
-        
-        /* 15 урок не работает (пропустил)
-        setFilters: (state, action) => {
-            state.currentPage = Number(action.payload.currentPage);
-            // state.sort = action.payload.sort;
-            state.sort.sortProperty = action.payload.sort
-            state.categoryId = Number(action.payload.categoryId);
-        }
-        */
     }
 });
-/* 15 урок не работает (пропустил)
- export const { setCategoryId, setSortType, setCurrentPage, setFilters } = filterSlice.actions;
- */
+
 export const { setCategoryId, setSortType, setCurrentPage, setFilter} = filterSlice.actions;
 
 export default filterSlice.reducer;

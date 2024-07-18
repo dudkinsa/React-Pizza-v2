@@ -32,7 +32,7 @@ const Sort = () => {
       /* if (event.path.includes(sortRef.current)) {
         console.log('был клик на  sort');
       */
-      //если клик был запредела попап, то мы скрываем попап
+      //если клик был запредела попап(меню), то мы скрываем попап
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
         // console.log('click outside');
