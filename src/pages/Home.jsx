@@ -43,7 +43,7 @@ const Home = () => {
         dispatch(setCurrentPage(number))
     }
 
-    const fetchPizzas = () => {
+    const fetchPizzas = async () => {
         setIsLoading(true);
 
         const sortBy = sortType.replace('+', '');
@@ -62,14 +62,26 @@ const Home = () => {
 
 
         // используем axios
-        axios.get(
-            `https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-        )
-            .then(res => {
-                setDataBasePizzas(res.data);
-                setIsLoading(false);
-            })
+        // await axios.get(
+        //     `https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+        // )
+        //     .then(res => {
+        //         setDataBasePizzas(res.data);
+        //         setIsLoading(false);
+        //     });
 
+        try {
+            //сокращаем async/await
+            const res = await axios.get(`https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
+            setDataBasePizzas(res.data);
+        } catch (error) {
+
+            alert('Ошибка при получении пицц');
+            console.log('ERROR', error);
+        } finally {
+            //если произошла ошибка, останови загрузку
+            setIsLoading(false);
+        }
 
     }
 
