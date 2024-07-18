@@ -2,16 +2,16 @@ import React from 'react';
 import qs from 'qs'; //
 //useSelector - исползуется как useContent
 import { useSelector, useDispatch } from 'react-redux';//
-import { useNavigate } from 'react-router-dom';//
+import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories/Categories';//
-import Sort from '../components/Sort/Sort';//
+import Sort, { listMenu } from '../components/Sort/Sort';//
 import Pizzablock from '../components/PizzaBlock/Pizzablock';//
 import Skeleton from '../components/PizzaBlock/Skeleton';//
 import Pagination from '../components/Pagination/Pagination';//
 
 
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
 import axios from 'axios';//
 import { SearchContext } from '../App';//
 
@@ -23,7 +23,7 @@ import { SearchContext } from '../App';//
 
 
 const Home = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const categoryId = useSelector((state) => state.filter.categoryId);  // С помощью хука useSelector вытаскиваем все наше хранилище из store.js
@@ -48,7 +48,21 @@ const Home = () => {
         dispatch(setCurrentPage(number))
     }
 
+    React.useEffect(() => {
+        if(window.location.search){
+            const params = qs.parse(window.location.search.substring(1));
+            // console.log(params);
+            
+            const sort = listMenu.find(obj => obj.sortProperty == params.sortProperty);
 
+            dispatch(
+                setFilter({
+                    ...params,
+                    sort,
+                })
+            )
+        }
+    }, [])
 
 
 
@@ -94,6 +108,8 @@ const Home = () => {
     // });
 
 
+
+
     React.useEffect(() => {
         setIsLoading(true);
 
@@ -130,8 +146,9 @@ const Home = () => {
             categoryId,
             currentPage,
         });
-
         // console.log(queryString);
+
+        navigate(`?${queryString}`)
     }, [categoryId, sortType, searchValue, currentPage]);
 
 

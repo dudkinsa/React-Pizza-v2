@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+    searchValue: '',
     categoryId: 0,
     currentPage: 1,
     sort: {
@@ -18,7 +19,7 @@ const filterSlice = createSlice({
         // Теперь мы должны сделать метод, который будет отвечать тип 
         // ID нашей category  setCategoryId (название могут быть любые)
         setCategoryId: (state, action) => {
-            console.log(action);
+            // console.log(action);
             state.categoryId = action.payload;
         },
 
@@ -28,6 +29,15 @@ const filterSlice = createSlice({
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload;
         },
+        setFilter: (state, action) => {
+            state.currentPage = Number(action.payload.currentPage);
+           
+            state.sort = action.payload.sort;
+            state.categoryId = Number(action.payload.categoryId);
+        }
+
+
+
         
         /* 15 урок не работает (пропустил)
         setFilters: (state, action) => {
@@ -42,6 +52,6 @@ const filterSlice = createSlice({
 /* 15 урок не работает (пропустил)
  export const { setCategoryId, setSortType, setCurrentPage, setFilters } = filterSlice.actions;
  */
-export const { setCategoryId, setSortType, setCurrentPage } = filterSlice.actions;
+export const { setCategoryId, setSortType, setCurrentPage, setFilter} = filterSlice.actions;
 
 export default filterSlice.reducer;
