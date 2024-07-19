@@ -1,19 +1,19 @@
 import React from 'react';
-import qs from 'qs'; //
+import qs from 'qs';
 //useSelector - исползуется как useContent
-import { useSelector, useDispatch } from 'react-redux';//
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import Categories from '../components/Categories/Categories';//
-import Sort, { listMenu } from '../components/Sort/Sort';//
-import Pizzablock from '../components/PizzaBlock/Pizzablock';//
-import Skeleton from '../components/PizzaBlock/Skeleton';//
-import Pagination from '../components/Pagination/Pagination';//
+import Categories from '../components/Categories/Categories';
+import Sort, { listMenu } from '../components/Sort/Sort';
+import Pizzablock from '../components/PizzaBlock/Pizzablock';
+import Skeleton from '../components/PizzaBlock/Skeleton';
+import Pagination from '../components/Pagination/Pagination';
 
 import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
-import axios from 'axios';//
-import { SearchContext } from '../App';//
-import { setItems } from '../redux/slices/pizzaSlice';
+import axios from 'axios';
+import { SearchContext } from '../App';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 // import dataBasePizzas from '../assets/pizza.json';
 
@@ -23,10 +23,12 @@ const Home = () => {
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
 
-    const dataBasePizzas = useSelector((state) => state.pizza.items);
+    const { items, stutus } = useSelector((state) => state.pizza);
     const categoryId = useSelector((state) => state.filter.categoryId);  // С помощью хука useSelector вытаскиваем все наше хранилище из store.js
     const sortType = useSelector((state) => state.filter.sort.sortProperty);
     const currentPage = useSelector((state) => state.filter.currentPage);
+
+
     //можно сократить код filter
     // const { categoryId, sort } = useSelector((state) => state.filter);
     // const sortType = sort.sortProperty;
@@ -34,7 +36,7 @@ const Home = () => {
     const { searchValue } = React.useContext(SearchContext);
 
     // const [dataBasePizzas, setDataBasePizzas] = React.useState([]); // В 17 уроке - удалил
-    const [isLoading, setIsLoading] = React.useState(true);
+    // const [isLoading, setIsLoading] = React.useState(true); // в 17 уроке перенесли в redux pizzaSlice
     // const [currentPage, setCurrentPage] = React.useState(1);
 
     const onClickCategory = (id) => {
@@ -45,8 +47,8 @@ const Home = () => {
         dispatch(setCurrentPage(number))
     }
 
-    const fetchPizzas = async () => {
-        setIsLoading(true);
+    const getPizzas = async () => {
+        // setIsLoading(true); // в 17 уроке перенесли в redux pizzaSlice
 
         const sortBy = sortType.replace('+', '');
         const order = sortType.includes('+') ? 'asc' : 'desc';
@@ -72,20 +74,19 @@ const Home = () => {
         //         setIsLoading(false);
         //     });
 
-        try {
-            //сокращаем async/await
-            const { data } = await axios.get(`https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
-            // setDataBasePizzas(res.data); // В 17 уроке - удалил
-            dispatch(setItems(data));
-
-        } catch (error) {
-
-            alert('Ошибка при получении пицц');
-            console.log('ERROR', error);
-        } finally {
-            //если произошла ошибка, останови загрузку
-            setIsLoading(false);
-        }
+        //сокращаем async/await
+        //в 17 уроке этот код перенес в pizzaSlice.js
+        // const { data } = await axios.get(`https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
+        // setDataBasePizzas(res.data); // В 17 уроке - удалил
+        dispatch(
+            fetchPizzas({
+                sortBy,
+                order,
+                category,
+                search,
+                currentPage,
+            }),
+        );
 
     }
 
@@ -149,14 +150,14 @@ const Home = () => {
         window.scrollTo(0, 0);
 
         if (!isSearch.current) {
-            fetchPizzas();
+            getPizzas();
         }
 
         isSearch.current = false;
     }, [categoryId, sortType, searchValue, currentPage]);
 
 
-    const pizzas = dataBasePizzas
+    const pizzas = items
         .map((pizza) => <Pizzablock
             key={pizza.id}
             {...pizza} //сократил с помощью spread оператора вместо нижнего кода
@@ -178,7 +179,7 @@ const Home = () => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items"> {isLoading ? skeletons : pizzas}</div>
+            <div className="content__items"> {stutus == 'loading' ? skeletons : pizzas}</div>
             <Pagination currentPage={currentPage} onChangePage={onChangePage} />
         </div>
 
