@@ -25,12 +25,27 @@ body {
 .content {
   padding: 40px 0;
 
+  &__error-info {
+    margin: 60px auto;
+    width: 580px;
+    text-align: center;
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    p{
+      font-size: 20px;
+    }
+  }
+
   &__title {
     font-weight: 800;
     font-size: 38px;
     margin-top: 60px;
     margin-bottom: 50px;
-    
+
   }
 
   &__items {
@@ -124,7 +139,7 @@ body {
     display: flex;
     align-items: center;
     font-style: 32px;
-   
+
 
     svg {
       position: relative;
