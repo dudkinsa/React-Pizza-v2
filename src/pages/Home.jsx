@@ -13,6 +13,7 @@ import Pagination from '../components/Pagination/Pagination';//
 import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
 import axios from 'axios';//
 import { SearchContext } from '../App';//
+import { setItems } from '../redux/slices/pizzaSlice';
 
 // import dataBasePizzas from '../assets/pizza.json';
 
@@ -22,6 +23,7 @@ const Home = () => {
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
 
+    const dataBasePizzas = useSelector((state) => state.pizza.items);
     const categoryId = useSelector((state) => state.filter.categoryId);  // С помощью хука useSelector вытаскиваем все наше хранилище из store.js
     const sortType = useSelector((state) => state.filter.sort.sortProperty);
     const currentPage = useSelector((state) => state.filter.currentPage);
@@ -31,7 +33,7 @@ const Home = () => {
 
     const { searchValue } = React.useContext(SearchContext);
 
-    const [dataBasePizzas, setDataBasePizzas] = React.useState([]);
+    // const [dataBasePizzas, setDataBasePizzas] = React.useState([]); // В 17 уроке - удалил
     const [isLoading, setIsLoading] = React.useState(true);
     // const [currentPage, setCurrentPage] = React.useState(1);
 
@@ -72,8 +74,10 @@ const Home = () => {
 
         try {
             //сокращаем async/await
-            const res = await axios.get(`https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
-            setDataBasePizzas(res.data);
+            const { data } = await axios.get(`https://66865ecb83c983911b01f11a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
+            // setDataBasePizzas(res.data); // В 17 уроке - удалил
+            dispatch(setItems(data));
+
         } catch (error) {
 
             alert('Ошибка при получении пицц');
