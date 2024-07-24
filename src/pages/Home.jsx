@@ -1,8 +1,8 @@
 import React from 'react';
 import qs from 'qs';
-//useSelector - исползуется как useContent
+// useSelector - исползуется как useContent
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories/Categories';
 import Sort, { listMenu } from '../components/Sort/Sort';
@@ -11,7 +11,6 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 
 import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
-import axios from 'axios';
 import { SearchContext } from '../App';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
@@ -158,15 +157,18 @@ const Home = () => {
 
 
     const pizzas = items
-        .map((pizza) => <Pizzablock
-            key={pizza.id}
-            {...pizza} //сократил с помощью spread оператора вместо нижнего кода
-        // title={pizza.title}
-        // price={pizza.price}
-        // imageUrl={pizza.imageUrl}
-        // sizes={pizza.sizes}
-        // types={pizza.types}
-        />);
+        .map((pizza) => (
+            <Link to={`/pizza/${pizza.id}`}>
+                <Pizzablock
+                    {...pizza} //сократил с помощью spread оператора вместо нижнего кода
+                // title={pizza.title}
+                // price={pizza.price}
+                // imageUrl={pizza.imageUrl}
+                // sizes={pizza.sizes}
+                // types={pizza.types}
+                />
+            </Link>
+        ));
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
@@ -190,7 +192,7 @@ const Home = () => {
 
             }
             <Pagination currentPage={currentPage} onChangePage={onChangePage} />
-            
+
         </div>
 
     )
