@@ -190,6 +190,7 @@ const Home = () => {
 
             }
             <Pagination currentPage={currentPage} onChangePage={onChangePage} />
+            
         </div>
 
     )
