@@ -42,6 +42,8 @@ const cartSlice = createSlice({
         },
     }
 });
+//создаем селектор. Переходим в Header.jsx
+export const selectCart =(state) => state.cart;
 
 export const { addItem, removeItem, minusItem, crearItems } = cartSlice.actions;
 

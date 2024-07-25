@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 import LOGO from '../../assets/images/pizza-logo.svg';
 import { Link } from 'react-router-dom';
 import Search from '../Search/Search';
+import { selectCart } from '../../redux/slices/cartSlice';
 
 const Header = () => {
-  const { items, totalPrice } = useSelector(state => state.cart);
+  // const { items, totalPrice } = useSelector(state => state.cart);
+  const { items, totalPrice } = useSelector(selectCart);// вместо state => state.cart  пишем selectCart. Он импортируется из cartSlice
 
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
