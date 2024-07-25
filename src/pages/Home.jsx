@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import qs from 'qs';
 // useSelector - исползуется как useContent
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,23 +10,31 @@ import Pizzablock from '../components/PizzaBlock/Pizzablock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 
-import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
-import { SearchContext } from '../App';
+import { setCategoryId, setCurrentPage, setFilter, setSortType } from '../redux/slices/filterSlice'; //Вытаскиваем из filterSlice метод setCategoryId
+import { SearchContext } from '../App';//
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 // import dataBasePizzas from '../assets/pizza.json';
 
 const Home = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();  //  пишем. useDispatch- венрни нам специальную фунцию кототоря есть в библиотеке react-redux и помещи в переменную  dispatch
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
 
     const { items, stutus } = useSelector((state) => state.pizza);
+    // const [categoryId, setCategoryId] = React.useState(0);   // Этот useState категории  убрал, так как идет переделка под redux-toolkit
     const categoryId = useSelector((state) => state.filter.categoryId);  // С помощью хука useSelector вытаскиваем все наше хранилище из store.js
+    // console.log('rudux state', categoryId);   // проверяем, что хранится в state
+
+    // Этот useState сортировки убрал, так как идет переделка под redux-toolkit
+    // cosns[sortType, setSortType] = useState({
+    //     name: 'популярности',
+    //     sortProperty: 'rating',
+    // });
+
     const sortType = useSelector((state) => state.filter.sort.sortProperty);
     const currentPage = useSelector((state) => state.filter.currentPage);
-
 
     //можно сократить код filter
     // const { categoryId, sort } = useSelector((state) => state.filter);
@@ -38,8 +46,11 @@ const Home = () => {
     // const [isLoading, setIsLoading] = React.useState(true); // в 17 уроке перенесли в redux pizzaSlice
     // const [currentPage, setCurrentPage] = React.useState(1);
 
+
+    //Делаем dispatch 
     const onClickCategory = (id) => {
-        dispatch(setCategoryId(id));
+        //Вопрос. Что будем передавать в dispatch()?  Ответ: setCategoryId(). Внутри этого метода вставляем id
+        dispatch(setCategoryId(id)); // Мы хотим изменить категорию setCategoryId(id), которая придет из id
     }
 
     const onChangePage = (number) => {
@@ -158,7 +169,7 @@ const Home = () => {
 
     const pizzas = items
         .map((pizza) => (
-            <Link to={`/pizza/${pizza.id}`}>
+            <Link to={`/pizza/${pizza.id}`} key={pizza.id}>
                 <Pizzablock
                     {...pizza} //сократил с помощью spread оператора вместо нижнего кода
                 // title={pizza.title}
@@ -178,7 +189,7 @@ const Home = () => {
         <div className="container">
             <div className="content__top">
                 <Categories value={categoryId} onClickCategory={onClickCategory} />
-                <Sort />
+                 <Sort />  {/* хук useSelector и useDisptch реализован в Sort.jsx */}
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {

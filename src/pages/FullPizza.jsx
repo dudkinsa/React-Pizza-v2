@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 
 const FullPizza = () => {
     const [pizza, setPizza] = React.useState();
     const { id } = useParams();
+    const navigate = useNavigate();
+
 // в useEffect нельзя делать async/await В react это запрещено. Асинхрон нужно делать внутри useEffect
     React.useEffect(() => {
         // async/await нужно делать вот таким способом 
@@ -14,7 +16,9 @@ const FullPizza = () => {
                 const {data} = await axios.get('https://66865ecb83c983911b01f11a.mockapi.io/items/' + id);
                 setPizza(data);
             } catch (error) {
-                alert('Ошибка при получении пиццы')
+        
+                alert('Ошибка при получении пиццы');
+                navigate('/')
             }
          };
 

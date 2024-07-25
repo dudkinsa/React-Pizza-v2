@@ -21,6 +21,10 @@ const filterSlice = createSlice({
         setCategoryId: (state, action) => {
             // console.log(action);
             state.categoryId = action.payload;
+            {/*
+                1) Что будем менять(изменить)?  Ответ: categoryId 
+                2) Что передавать?  action.payload  В payload будет храниться какое то значение
+                */}
         },
 
         setSortType: (state, action) => {
@@ -37,7 +41,9 @@ const filterSlice = createSlice({
         }
     }
 });
-
+// После создание методов, нужно экспортировать
+//Если мы хотим вытащить какие то экшены, то делем это.
 export const { setCategoryId, setSortType, setCurrentPage, setFilter} = filterSlice.actions;
 
+// По умолчани. мы будем экспортировать reducer
 export default filterSlice.reducer;

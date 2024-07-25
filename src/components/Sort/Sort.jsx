@@ -41,7 +41,7 @@ const Sort = () => {
 
     document.body.addEventListener('click', handClickOutside);
 
-    //это код убирает лишних или ложныз обработчиков, когда например переходим на другую страницу.
+    //это код убирает лишних или ложных обработчиков, когда например переходим на другую страницу.
     return () => {
       // console.log('Sort unmount');
       document.body.removeEventListener('', handClickOutside);
