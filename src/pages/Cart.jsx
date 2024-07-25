@@ -2,14 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import CartItem from '../components/CartItem/CartItem';
-import { crearItems } from '../redux/slices/cartSlice';
+import { crearItems, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty/CartEmpty';
 
 
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const {totalPrice, items } = useSelector((state) => state.cart);
+  // const {totalPrice, items } = useSelector((state) => state.cart);
+  const {totalPrice, items } = useSelector(selectCart);  // вместо state => state.cart  пишем selectCart. Он импортируется из cartSlice
+
 
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
