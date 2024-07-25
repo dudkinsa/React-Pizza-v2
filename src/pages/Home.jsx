@@ -27,13 +27,14 @@ const Home = () => {
     const categoryId = useSelector((state) => state.filter.categoryId);  // С помощью хука useSelector вытаскиваем все наше хранилище из store.js
     const sortType = useSelector((state) => state.filter.sort.sortProperty);
     const currentPage = useSelector((state) => state.filter.currentPage);
+    const searchValue = useSelector((state) => state.filter.searchValue);
 
 
     //можно сократить код filter
     // const { categoryId, sort } = useSelector((state) => state.filter);
     // const sortType = sort.sortProperty;
 
-    const { searchValue } = React.useContext(SearchContext);
+    // const { searchValue } = React.useContext(SearchContext); //Убираем Context
 
     // const [dataBasePizzas, setDataBasePizzas] = React.useState([]); // В 17 уроке - удалил
     // const [isLoading, setIsLoading] = React.useState(true); // в 17 уроке перенесли в redux pizzaSlice

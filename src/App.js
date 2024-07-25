@@ -6,16 +6,16 @@ import { Route, Routes } from 'react-router-dom';
 import Cart from './pages/Cart';
 import './scss/app.scss';
 
-export const SearchContext = React.createContext();
+// export const SearchContext = React.createContext();  //убираем useContext
 
 const App = () => {
-  const [searchValue, setSearchValue] = React.useState('');
+  // const [searchValue, setSearchValue] = React.useState(''); переделка под redux-toolkit
 
 
   return (
     <div className="wrapper">
 
-          <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+          {/* <SearchContext.Provider value={{ searchValue, setSearchValue }}>    //убираем useContext  */}
         <Header />
         <div className="content">
 
@@ -27,7 +27,7 @@ const App = () => {
 
 
         </div>
-      </SearchContext.Provider>
+      {/* </SearchContext.Provider>  //убираем useContext */}
     </div>
   );
 }
