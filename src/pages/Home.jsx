@@ -12,7 +12,7 @@ import Pagination from '../components/Pagination/Pagination';
 
 import { setCategoryId, setCurrentPage, setFilter } from '../redux/slices/filterSlice';
 import axios from 'axios';
-import { SearchContext } from '../App';
+// import { SearchContext } from '../App';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 // import dataBasePizzas from '../assets/pizza.json';
