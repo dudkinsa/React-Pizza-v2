@@ -4,6 +4,7 @@ import NotFound from './pages/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import Cart from './pages/Cart';
 import './scss/app.scss';
+import FullPizza from './pages/FullPizza';
 
 // export const SearchContext = React.createContext();  //убираем useContext
 
@@ -21,6 +22,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
+            <Route path='/pizza/:id' element={<FullPizza />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
 

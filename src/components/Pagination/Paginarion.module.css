@@ -1,0 +1,23 @@
+.root li {
+  display: inline-block;
+}
+.root li a {
+  display: inline-block;
+  color: #fe5f1e;
+  text-align: center;
+  width: 45px;
+  height: 45px;
+  line-height: 42px;
+  margin-right: 10px;
+  border: 1px solid #fe5f1e;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.root li a:hover {
+  background-color: #fe5f1e;
+  color: #fff;
+}
+.root :global .selected a {
+  background-color: #fe5f1e;
+  color: #fff;
+}/*# sourceMappingURL=Paginarion.module.css.map */
