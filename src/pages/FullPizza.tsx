@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const FullPizza: React.FC = () => {
+const FullPizza: React.FC = () => { // FC это функциальный компонент. В TS нужно обзятельно указывать. Что за тип?  const FullPizza: React.FC
     const [pizza, setPizza] = React.useState<{
         imageUrl: string,
         title: string,
