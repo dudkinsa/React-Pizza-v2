@@ -12,7 +12,7 @@ const Header = () => {
 
   const location = useLocation();
 
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0); // Указывать типизаци any лучше не делать. Нужно точно указывать какой тип 
 
   return (
     <div className="header">

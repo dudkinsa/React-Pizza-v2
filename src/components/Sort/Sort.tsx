@@ -2,32 +2,36 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSortType } from '../../redux/slices/filterSlice';
 
-export const listMenu = [
-  { name: 'популярности (DESC)', sortProperty: 'rating' },
-  { name: 'популярности (ASC)', sortProperty: '+rating' },
-  { name: 'цене (DESC)', sortProperty: 'price' },
-  { name: 'цене (ASC)', sortProperty: '+price' },
-  { name: 'алфавиту (DESC)', sortProperty: 'title' },
-  { name: 'алфавиту (ASC)', sortProperty: '+title' },
-];
+type SortListMenu = {
+  name: string;
+  sortProperty: string;
+}
 
+export const listMenu: SortListMenu[]  = [
+    { name: 'популярности (DESC)', sortProperty: 'rating' },
+    { name: 'популярности (ASC)', sortProperty: '+rating' },
+    { name: 'цене (DESC)', sortProperty: 'price' },
+    { name: 'цене (ASC)', sortProperty: '+price' },
+    { name: 'алфавиту (DESC)', sortProperty: 'title' },
+    { name: 'алфавиту (ASC)', sortProperty: '+title' },
+  ];
 
 const Sort = () => {
   const dispatch = useDispatch();
   // const sort = useSelector(state => state.filter.sort);
   const sort = useSelector(selectSort);
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = React.useState(false);
 
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj: SortListMenu) => {
     dispatch(setSortType(obj))
     setOpen(false);
   }
 
   React.useEffect(() => {
     // console.log('Sort mount');
-    const handClickOutside = event => {
+    const handClickOutside = (event: any) => {
 
       // event.path.includes(sortRef.current  в новых версиях не досупен. Вместо нее пишем composedPath()
       /* if (event.path.includes(sortRef.current)) {
@@ -42,7 +46,7 @@ const Sort = () => {
 
     document.body.addEventListener('click', handClickOutside);
 
-    //это код убирает лишних или ложныз обработчиков, когда например переходим на другую страницу.
+    //это код убирает лишних или ложные обработчиков, когда например переходим на другую страницу.
     return () => {
       // console.log('Sort unmount');
       document.body.removeEventListener('', handClickOutside);
